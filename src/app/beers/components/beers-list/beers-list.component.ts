@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 
 @Component({
-  selector: 'app-beer-list',
+  selector: 'app-beers-list',
   templateUrl: './beers-list.component.html',
   styleUrls: ['./beers-list.component.scss'],
   standalone: true,
