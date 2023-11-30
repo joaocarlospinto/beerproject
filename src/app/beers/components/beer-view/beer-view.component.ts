@@ -15,6 +15,9 @@ import { MatListModule } from '@angular/material/list';
 
 import { Beer } from '../../model/beer';
 import { NgFor, NgIf } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @Component({
@@ -28,7 +31,10 @@ import { NgFor, NgIf } from '@angular/common';
     NgFor,
     MatSidenavModule,
     MatButtonModule,
-    MatListModule
+    MatListModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatDividerModule
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

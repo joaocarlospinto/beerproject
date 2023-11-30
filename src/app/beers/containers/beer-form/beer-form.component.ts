@@ -1,12 +1,10 @@
 import { Location, NgFor, NgIf } from '@angular/common';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import {
-  FormBuilder,
   FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
-  UntypedFormArray,
   Validators
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -52,14 +50,14 @@ export class BeerFormComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
+    private formBuilder: NonNullableFormBuilder,
     private service: BeersService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private location: Location,
     private route: ActivatedRoute,
-    public formUtils: FormUtilsService,
-    private formBuilder: FormBuilder,
-  ) { }
+    public formUtils: FormUtilsService
+  ) {}
 
   ngOnInit(): void {
     const beer: Beer = this.route.snapshot.data['beer'];

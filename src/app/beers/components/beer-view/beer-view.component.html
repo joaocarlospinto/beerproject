@@ -1,28 +1,16 @@
-<mat-drawer-container autosize class="example-container">
-  <mat-drawer #drawer mode="side" opened="true" class="example-sidenav">
-    <div>
-      <h3>{{ beer.name }}</h3>
-    </div>
-    <mat-nav-list dense>
-
-        <mat-list-item>
-          <span mat-line>{{ beer.type }}</span>
-        </mat-list-item>
-
-        <mat-list-item>
-          <span mat-line>{{ beer.origin }}</span>
-        </mat-list-item>
-
-        <mat-list-item>
-          <span mat-line>{{ beer.price }}</span>
-        </mat-list-item>
-
-        <mat-list-item>
-          <span mat-line>{{ beer.rating }}</span>
-        </mat-list-item>
-
-    </mat-nav-list>
-  </mat-drawer>
-
-
-</mat-drawer-container>
+<mat-card appearance="outlined">
+  <mat-toolbar color="primary">Beers Detail</mat-toolbar>
+  <mat-table>
+    <mat-list>
+      <mat-list-item><b>NAME : </b>{{ beer.name }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item><b>TYPE :</b> {{ beer.type }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item><b>ORIGIN :</b> {{ beer.origin }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item><b>PRICE :</b> {{ beer.price }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item><b>RATING :</b> {{ beer.rating }}</mat-list-item>
+    </mat-list>
+  </mat-table>
+</mat-card>

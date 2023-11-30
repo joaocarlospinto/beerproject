@@ -20,7 +20,7 @@ export class BeersListComponent {
   @Output() add: EventEmitter<boolean> = new EventEmitter(false);
   @Output() view: EventEmitter<Beer> = new EventEmitter(false);
 
-  readonly displayedColumns = ['name', 'type', 'origin', 'price', 'rating'];
+  readonly displayedColumns = ['name', 'type', 'origin', 'price', 'rating', 'actions'];
 
   onDetails(record: Beer) {
     this.details.emit(record);

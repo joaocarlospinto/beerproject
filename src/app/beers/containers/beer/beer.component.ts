@@ -8,13 +8,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { ConfirmationDialogComponent } from 'src/app/beers/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/beers/shared/components/error-dialog/error-dialog.component';
 import { BeersListComponent } from 'src/app/beers/components/beers-list/beers-list.component';
 import { Beer } from '../../model/beer';
-import { BeerPage } from '../../model/beer-page';
+
 import { BeersService } from '../../services/beers.service';
 
 @Component({
@@ -35,10 +35,10 @@ import { BeersService } from '../../services/beers.service';
   ]
 })
 export class BeersComponent implements OnInit {
-  beers$: Observable<BeerPage> | null = null;
+  beers$!: Beer[];
+  sub!: Subscription;
+  errorMessage: string = '';
 
-  pageIndex = 0;
-  pageSize = 10;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -54,25 +54,27 @@ export class BeersComponent implements OnInit {
     this.refresh();
   }
 
-  refresh(pageEvent: PageEvent = { length: 0, pageIndex: 0, pageSize: 10 }) {
-    this.beers$ = this.beersService
-      .list(pageEvent.pageIndex, pageEvent.pageSize)
-      .pipe(
-        tap(() => {
-          this.pageIndex = pageEvent.pageIndex;
-          this.pageSize = pageEvent.pageSize;
-        }),
-        catchError(() => {
-          this.onError('Error loading beers.');
-          return of({ beers: [], totalElements: 0 } as BeerPage);
-        })
-      );
+  refresh() {
+
+    this.sub = this.beersService.list().subscribe({
+      next: beers => {
+        this.beers$ = beers;
+      },
+
+      error: err => {
+        this.errorMessage = err,
+        this.onError('Error loading beers.');}
+    });
   }
 
   onError(errorMsg: string) {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   onAdd() {
