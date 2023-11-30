@@ -1,6 +1,8 @@
 import { Location, NgFor, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+
 import {
+  FormBuilder,
   FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
@@ -50,13 +52,13 @@ export class BeerFormComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
-    private formBuilder: NonNullableFormBuilder,
     private service: BeersService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private location: Location,
     private route: ActivatedRoute,
-    public formUtils: FormUtilsService
+    public formUtils: FormUtilsService,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit(): void {
