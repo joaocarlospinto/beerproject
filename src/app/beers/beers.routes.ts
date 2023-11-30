@@ -5,7 +5,7 @@ import { BeerFormComponent } from './containers/beer-form/beer-form.component';
 import { BeersComponent } from './containers/beer/beer.component';
 import { BeerResolver } from './resolver/beer.resolver';
 
-export const COURSES_ROUTES: Routes = [
+export const BEERS_ROUTES: Routes = [
   { path: '', component: BeersComponent },
   { path: 'new', component: BeerFormComponent, resolve: { course: BeerResolver } },
   {

@@ -4,6 +4,6 @@ export const APP_ROUTES: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'beerproject' },
   {
     path: 'beerproject',
-    loadChildren: () => import('./beerproject/beer.routes').then(m => m.BEER_ROUTES)
+    loadChildren: () => import('./beers/beers.routes').then(m => m.BEERS_ROUTES)
   }
 ];
