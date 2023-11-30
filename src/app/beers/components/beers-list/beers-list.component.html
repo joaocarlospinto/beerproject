@@ -1,0 +1,65 @@
+<mat-table [dataSource]="beers">
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let beer"
+      ><a (click)="onView(beer)">{{ beer.name }}</a></mat-cell
+    >
+  </ng-container>
+
+  <!-- Type Column -->
+  <ng-container matColumnDef="type">
+    <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+    <mat-cell *matCellDef="let beer">{{ beer.type }} </mat-cell>
+  </ng-container>
+
+    <!-- Type Origin -->
+    <ng-container matColumnDef="origin">
+      <mat-header-cell *matHeaderCellDef>Origin</mat-header-cell>
+      <mat-cell *matCellDef="let beer">{{ beer.origin }} </mat-cell>
+    </ng-container>
+
+       <!-- Type Rating -->
+       <ng-container matColumnDef="rating">
+        <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
+        <mat-cell *matCellDef="let beer">{{ beer.rting }} </mat-cell>
+      </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef class="action-column">
+      <button
+        mat-mini-fab
+        color="accent"
+        aria-label="Add a new Beer"
+        (click)="onAdd()"
+        class="action-column-header"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let course" class="action-column">
+      <button
+        mat-icon-button
+        color="primary"
+        aria-label="Update Beer"
+        (click)="onEdit(beer)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="warn"
+        aria-label="Remove Beer"
+        (click)="onRemove(beer)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
