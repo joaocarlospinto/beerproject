@@ -1,5 +1,5 @@
 <mat-card appearance="outlined">
-  <mat-toolbar color="primary">Available Beers</mat-toolbar>
+  <mat-toolbar color="primary">Beers List</mat-toolbar>
 
   <div class="mat-elevation-z8" *ngIf="beers$ | async as beerPage; else loading">
     <app-beers-list
