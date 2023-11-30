@@ -8,7 +8,7 @@
         <input matInput formControlName="name" #name />
         <mat-hint align="end">{{ name.value.length }} / 100</mat-hint>
         <mat-error *ngIf="form.get('name')?.invalid">
-          {{ getErrorMessage('name') }}
+          {{ getErrorMessage("name") }}
         </mat-error>
       </mat-form-field>
 
@@ -17,7 +17,7 @@
         <input matInput formControlName="type" #type />
         <mat-hint align="end">{{ type.value.length }} / 100</mat-hint>
         <mat-error *ngIf="form.get('type')?.invalid">
-          {{ getErrorMessage('type') }}
+          {{ getErrorMessage("type") }}
         </mat-error>
       </mat-form-field>
 
@@ -26,7 +26,7 @@
         <input matInput formControlName="origin" #origin />
         <mat-hint align="end">{{ origin.value.length }} / 100</mat-hint>
         <mat-error *ngIf="form.get('origin')?.invalid">
-          {{ getErrorMessage('origin') }}
+          {{ getErrorMessage("origin") }}
         </mat-error>
       </mat-form-field>
 
@@ -35,27 +35,36 @@
         <input matInput formControlName="price" #price />
         <mat-hint align="end">{{ price.value.length }} / 100</mat-hint>
         <mat-error *ngIf="form.get('price')?.invalid">
-          {{ getErrorMessage('price') }}
+          {{ getErrorMessage("price") }}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <mat-label>Rating</mat-label>
         <input matInput formControlName="rating" #rating />
-        <mat-hint align="end">{{ rarting.value.length }} / 100</mat-hint>
+        <mat-hint align="end">{{ rating.value.length }} / 100</mat-hint>
         <mat-error *ngIf="form.get('rating')?.invalid">
-          {{ getErrorMessage('rating') }}
+          {{ getErrorMessage("rating") }}
         </mat-error>
       </mat-form-field>
-
-
+    </form>
   </mat-card-content>
 
   <mat-card-actions class="actions-center">
-    <button mat-raised-button color="primary" (click)="onSubmit()" type="submit">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      type="submit"
+    >
       Save
     </button>
-    <button mat-raised-button (click)="onCancel()" class="btn-space" type="button">
+    <button
+      mat-raised-button
+      (click)="onCancel()"
+      class="btn-space"
+      type="button"
+    >
       Cancel
     </button>
   </mat-card-actions>
