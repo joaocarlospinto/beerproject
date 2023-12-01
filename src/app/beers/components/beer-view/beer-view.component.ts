@@ -1,12 +1,9 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   NO_ERRORS_SCHEMA,
-  OnInit,
-  ViewChild
+  OnInit
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -14,10 +11,11 @@ import { ActivatedRoute } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 
 import { Beer } from '../../model/beer';
-import { NgFor, NgIf } from '@angular/common';
+import { Location, NgFor, NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
@@ -34,7 +32,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatListModule,
     MatCardModule,
     MatToolbarModule,
-    MatDividerModule
+    MatDividerModule,
+    MatIconModule
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })
@@ -43,10 +42,15 @@ export class BeerViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private changeDetectorRef: ChangeDetectorRef) { }
+    private changeDetectorRef: ChangeDetectorRef,
+    private location: Location) { }
 
   ngOnInit() {
     this.beer = this.route.snapshot.data['beer'];
+  }
+
+  onCancel() {
+    this.location.back();
   }
 
 }
