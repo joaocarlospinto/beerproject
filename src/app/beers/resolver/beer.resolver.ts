@@ -14,9 +14,10 @@ export class BeerResolver {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Beer> {
     if (route.params && route.params['id']) {
+      console.log('por id');
       return this.service.loadById(route.params['id']);
     }
-
+    console.log('sem id');
     return of({ id: 0, name: '', type: '', origin: '', price: 0, rating: 0 });
   }
 }
