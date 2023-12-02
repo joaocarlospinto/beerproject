@@ -98,8 +98,16 @@ export class BeerFormComponent implements OnInit {
     }
   }
 
-  getErrorMessage(fieldName: string): string {
-    return this.formUtils.getFieldErrorMessage(this.form, fieldName);
+  getErrorMessage(fieldName: string): string{
+    if ((fieldName == 'price')) {
+      return 'Minimum value is 0.01';
+    } else {
+      if ((fieldName == 'rating')) {
+        return 'Rating must be between 0.01 and 5.00';
+      } else {
+        return this.formUtils.getFieldErrorMessage(this.form, fieldName);
+      }
+    }
   }
 
   onSubmit() {
