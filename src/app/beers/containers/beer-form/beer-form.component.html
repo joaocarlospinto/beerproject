@@ -54,6 +54,7 @@
     <button
       mat-raised-button
       color="primary"
+      [disabled]="form.invalid"
       (click)="onSubmit()"
       type="submit"
     >
