@@ -5,7 +5,7 @@ import {
   FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -43,8 +43,8 @@ import { FormUtilsService } from 'src/app/beers/shared/services/form-utils.servi
     MatIconModule,
     MatSnackBarModule,
     MatDialogModule,
-    NgFor
-  ]
+    NgFor,
+  ],
 })
 export class BeerFormComponent implements OnInit {
   form!: FormGroup;
@@ -61,29 +61,52 @@ export class BeerFormComponent implements OnInit {
 
   ngOnInit(): void {
     const beer: Beer = this.route.snapshot.data['beer'];
-    this.form = this.formBuilder.group({
-      id: [beer.id],
-      name: [
-        beer.name,
-        [Validators.required, Validators.minLength(5), Validators.maxLength(100)]
-      ],
-      type: [beer.type, [Validators.required]],
-      origin: [beer.origin, [Validators.required]],
-      price: [beer.price, [Validators.required]],
-      rating: [beer.rating, [Validators.required]]
-    });
+    if (beer) {
+      this.form = this.formBuilder.group({
+        id: [beer.id],
+        name: [
+          beer.name,
+          [
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(100),
+          ],
+        ],
+        type: [beer.type, [Validators.required]],
+        origin: [beer.origin, [Validators.required]],
+        price: [beer.price, [Validators.required]],
+        rating: [beer.rating, [Validators.required]],
+      });
+    }
+    if (!beer) {
+      this.form = this.formBuilder.group({
+        id: [null],
+        name: [
+          null,
+          [
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(100),
+          ],
+        ],
+        type: [null, [Validators.required]],
+        origin: [null, [Validators.required]],
+        price: [null, [Validators.required]],
+        rating: [null, [Validators.required]],
+      });
+
+    }
   }
 
   getErrorMessage(fieldName: string): string {
     return this.formUtils.getFieldErrorMessage(this.form, fieldName);
   }
 
-
   onSubmit() {
     if (this.form.valid) {
       this.service.save(this.form.value as Beer).subscribe({
         next: () => this.onSuccess(),
-        error: () => this.onError()
+        error: () => this.onError(),
       });
     } else {
       this.formUtils.validateAllFormFields(this.form);
@@ -101,7 +124,7 @@ export class BeerFormComponent implements OnInit {
 
   private onError() {
     this.dialog.open(ErrorDialogComponent, {
-      data: 'Error saving this beer.'
+      data: 'Error saving this beer.',
     });
   }
 }
