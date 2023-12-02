@@ -32,6 +32,7 @@ export class BeersService {
     if (record.id) {
       return this.update(record);
     }
+    console.log('create');
     return this.create(record);
   }
 
@@ -44,6 +45,6 @@ export class BeersService {
   }
 
   remove(id: number) {
-    return this.http.delete<Beer>(`${this.API}/${id}`).pipe(first());
+    return this.http.delete(`${this.API}/${id}`, { responseType: 'text' }).pipe(first());
   }
 }
