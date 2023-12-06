@@ -1,12 +1,15 @@
-<mat-table [dataSource]="dataSource" matSort>
+<mat-table [dataSource]="dataSource" matSort >
   <!-- Name Column -->
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-    <mat-cell *matCellDef="let beer"><a (click)="onView(beer)">{{ beer.name }}</a></mat-cell>
+    <mat-cell *matCellDef="let beer">
+      <img src="./assets/beer-mug.svg" style="width: 20%" />
+       <a (click)="onView(beer)"> {{ beer.name }}</a>
+    </mat-cell>
   </ng-container>
 
-   <!-- Type Column -->
-   <ng-container matColumnDef="type">
+  <!-- Type Column -->
+  <ng-container matColumnDef="type">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
     <mat-cell *matCellDef="let beer">{{ beer.type }} </mat-cell>
   </ng-container>
@@ -28,8 +31,6 @@
     <mat-header-cell *matHeaderCellDef mat-sort-header>Rating</mat-header-cell>
     <mat-cell *matCellDef="let beer">{{ beer.rating }} </mat-cell>
   </ng-container>
-
-
 
   <!-- Actions Column -->
   <ng-container matColumnDef="actions">

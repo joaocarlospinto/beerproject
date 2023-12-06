@@ -8,17 +8,14 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
   standalone: true,
   imports: [MatToolbarModule, RouterLink, RouterOutlet, MatSlideToggleModule],
   template: `
-    <mat-toolbar color="primary">
-      <h1 [routerLink]="['/']" style="cursor: pointer;">Beer Project</h1>
-      <mat-slide-toggle  ngModel="isDarkTheme" >Dark Mode</mat-slide-toggle>
+    <mat-toolbar color="primary" >
+
+    <img  src="./assets/logo-bg.png" [routerLink]="['/']" style="width: 20%" />
+
     </mat-toolbar>
     <router-outlet></router-outlet>
   `,
 })
 export class AppComponent {
-  isDarkTheme: boolean = false;
 
-  toggleTheme() {
-    this.isDarkTheme = !this.isDarkTheme;
-  }
 }

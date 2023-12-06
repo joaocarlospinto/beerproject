@@ -6,7 +6,6 @@
       <mat-form-field class="full-width">
         <mat-label>Name</mat-label>
         <input matInput formControlName="name" #name />
-        <mat-hint align="end">{{ name.value.length }} / 100</mat-hint>
         <mat-error *ngIf="form.get('name')?.invalid">
           {{ getErrorMessage("name") }}
         </mat-error>
@@ -15,7 +14,6 @@
       <mat-form-field class="full-width">
         <mat-label>Type</mat-label>
         <input matInput formControlName="type" #type />
-        <mat-hint align="end">{{ type.value.length }} / 100</mat-hint>
         <mat-error *ngIf="form.get('type')?.invalid">
           {{ getErrorMessage("type") }}
         </mat-error>
@@ -35,7 +33,6 @@
       <mat-form-field class="full-width">
         <mat-label>Price</mat-label>
         <input matInput type="number" formControlName="price" #price />
-        <mat-hint align="end">{{ price.value.length }} / 100</mat-hint>
         <mat-error *ngIf="form.get('price')?.invalid">
           {{ getErrorMessage("price") }}
         </mat-error>
@@ -44,7 +41,6 @@
       <mat-form-field class="full-width">
         <mat-label>Rating</mat-label>
         <input matInput type="number" formControlName="rating" #rating />
-        <mat-hint align="end">{{ rating.value.length }} / 100</mat-hint>
         <mat-error *ngIf="form.get('rating')?.invalid">
           {{ getErrorMessage("rating") }}
         </mat-error>
