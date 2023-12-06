@@ -1,18 +1,19 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
 import { Beer } from '../../model/beer';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 @Component({
   selector: 'app-beers-list',
   templateUrl: './beers-list.component.html',
   styleUrls: ['./beers-list.component.scss'],
   standalone: true,
-  imports: [MatTableModule, MatIconModule, MatButtonModule]
+  imports: [MatTableModule, MatIconModule, MatButtonModule, MatSortModule]
 })
-export class BeersListComponent {
+export class BeersListComponent implements AfterViewInit{
   @Input() beers: Beer[] = [];
   @Output() details: EventEmitter<Beer> = new EventEmitter(false);
   @Output() edit: EventEmitter<Beer> = new EventEmitter(false);
@@ -21,6 +22,17 @@ export class BeersListComponent {
   @Output() view: EventEmitter<Beer> = new EventEmitter(false);
 
   readonly displayedColumns = ['name', 'type', 'origin', 'price', 'rating', 'actions'];
+
+  dataSource!: MatTableDataSource<Beer>;
+  @ViewChild(MatSort)  sort!: MatSort;
+
+  ngOnInit(): void {
+    this.dataSource = new MatTableDataSource<Beer>(this.beers);
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
 
   onDetails(record: Beer) {
     this.details.emit(record);
@@ -41,4 +53,7 @@ export class BeersListComponent {
   onView(record: Beer) {
     this.view.emit(record);
   }
+
+
+
 }

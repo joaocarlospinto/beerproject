@@ -29,5 +29,6 @@ export class ConfirmationDialogComponent {
 
   onConfirm(result: boolean): void {
     this.dialogRef.close(result);
+
   }
 }

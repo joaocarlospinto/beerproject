@@ -2,6 +2,7 @@
   <mat-toolbar color="primary">Beers List</mat-toolbar>
 
   <div class="mat-elevation-z8" *ngIf="beers$ ; else loading">
+
     <app-beers-list
       [beers]="beers$"
       (add)="onAdd()"

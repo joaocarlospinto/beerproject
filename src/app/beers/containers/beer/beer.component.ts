@@ -39,7 +39,6 @@ export class BeersComponent implements OnInit {
   sub!: Subscription;
   errorMessage: string = '';
 
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
@@ -60,7 +59,6 @@ export class BeersComponent implements OnInit {
       next: beers => {
         this.beers$ = beers;
       },
-
       error: err => {
         this.errorMessage = err,
         this.onError('Error loading beers.');}
@@ -100,14 +98,16 @@ export class BeersComponent implements OnInit {
           next: () => {
             this.refresh();
             this.snackBar.open('Beer removed successfully!', 'X', {
-              duration: 5000,
+              duration: 9000,
               verticalPosition: 'top',
               horizontalPosition: 'center'
             });
+            window.location.reload();
           },
           error: () => this.onError('Error trying to remove the beer.')
         });
       }
     });
   }
+
 }

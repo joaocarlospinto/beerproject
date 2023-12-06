@@ -1,33 +1,31 @@
-<mat-table [dataSource]="beers">
+<mat-table [dataSource]="dataSource" matSort>
   <!-- Name Column -->
   <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-    <mat-cell *matCellDef="let beer"
-      ><a (click)="onView(beer)">{{ beer.name }}</a></mat-cell
-    >
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+    <mat-cell *matCellDef="let beer"><a (click)="onView(beer)">{{ beer.name }}</a></mat-cell>
   </ng-container>
 
    <!-- Type Column -->
    <ng-container matColumnDef="type">
-    <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
     <mat-cell *matCellDef="let beer">{{ beer.type }} </mat-cell>
   </ng-container>
 
   <!-- Type Origin -->
   <ng-container matColumnDef="origin">
-    <mat-header-cell *matHeaderCellDef>Origin</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Origin</mat-header-cell>
     <mat-cell *matCellDef="let beer">{{ beer.origin }} </mat-cell>
   </ng-container>
 
   <!-- Type Price -->
   <ng-container matColumnDef="price">
-    <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
     <mat-cell *matCellDef="let beer">{{ beer.price }} </mat-cell>
   </ng-container>
 
   <!-- Type Rating -->
   <ng-container matColumnDef="rating">
-    <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Rating</mat-header-cell>
     <mat-cell *matCellDef="let beer">{{ beer.rating }} </mat-cell>
   </ng-container>
 

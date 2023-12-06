@@ -6,6 +6,8 @@ import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
+  ValidatorFn,
+  AbstractControl
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -24,6 +26,16 @@ import { Beer } from 'src/app/beers/model/beer';
 import { BeersService } from 'src/app/beers/services/beers.service';
 import { ErrorDialogComponent } from 'src/app/beers/shared/components/error-dialog/error-dialog.component';
 import { FormUtilsService } from 'src/app/beers/shared/services/form-utils.service';
+import { countries } from '../../model/country-data-store';
+
+function ratingRange(min: number, max: number): ValidatorFn {
+  return (c: AbstractControl): { [key: string]: boolean } | null => {
+    if (c.value !== null && (isNaN(c.value) || c.value < min || c.value > max)) {
+      return { range: true };
+    }
+    return null;
+  };
+}
 
 @Component({
   selector: 'app-beer-form',
@@ -48,6 +60,7 @@ import { FormUtilsService } from 'src/app/beers/shared/services/form-utils.servi
 })
 export class BeerFormComponent implements OnInit {
   form!: FormGroup;
+  public countries: any = countries;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -68,14 +81,14 @@ export class BeerFormComponent implements OnInit {
           beer.name,
           [
             Validators.required,
-            Validators.minLength(5),
+            Validators.minLength(1),
             Validators.maxLength(100),
           ],
         ],
         type: [beer.type, [Validators.required]],
         origin: [beer.origin, [Validators.required]],
-        price: [beer.price, [Validators.required]],
-        rating: [beer.rating, [Validators.required]],
+        price: [beer.price, [Validators.required, Validators.min(0.01)]],
+        rating: [beer.rating, [Validators.required, ratingRange(0.01, 5.00)]],
       });
     }
     if (!beer) {
@@ -85,18 +98,18 @@ export class BeerFormComponent implements OnInit {
           null,
           [
             Validators.required,
-            Validators.minLength(5),
+            Validators.minLength(1),
             Validators.maxLength(100),
           ],
         ],
         type: [null, [Validators.required]],
         origin: [null, [Validators.required]],
-        price: [null, [Validators.required]],
-        rating: [null, [Validators.required]],
+        price: [null, [Validators.required, Validators.min(0.01)]],
+        rating: [null, [Validators.required, ratingRange(0.01, 5.00)]],
       });
-
     }
   }
+
 
   getErrorMessage(fieldName: string): string{
     if ((fieldName == 'price')) {
@@ -112,6 +125,9 @@ export class BeerFormComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
+
+      this.form.value.name = this.form.value.name.toUpperCase();
+      this.form.value.type = this.form.value.type.toUpperCase();
       this.service.save(this.form.value as Beer).subscribe({
         next: () => this.onSuccess(),
         error: () => this.onError(),
