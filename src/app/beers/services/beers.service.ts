@@ -8,8 +8,8 @@ import { Beer } from '../model/beer';
   providedIn: 'root'
 })
 export class BeersService {
-  private readonly API = 'https://beer-project-api.onrender.com/beersapi';
- // private readonly API = 'http://localhost:8080/beersapi';
+ // private readonly API = 'https://beer-project-api.onrender.com/beersapi';
+  private readonly API = 'http://localhost:8080/beersapi';
   private cache: Beer[] = [];
 
   constructor(private http: HttpClient) {}

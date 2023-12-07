@@ -108,6 +108,15 @@ export class BeerFormComponent implements OnInit {
         rating: [null, [Validators.required, ratingRange(0.01, 5.00)]],
       });
     }
+
+    const nameContr = this.form.get('name');
+    nameContr?.valueChanges.subscribe(() => {
+      nameContr.patchValue(nameContr.value.toUpperCase(), {emitEvent: false});
+    });
+    const typeContr = this.form.get('type');
+    typeContr?.valueChanges.subscribe(() => {
+      typeContr.patchValue(typeContr.value.toUpperCase(), {emitEvent: false});
+    });
   }
 
 
@@ -126,8 +135,8 @@ export class BeerFormComponent implements OnInit {
   onSubmit() {
     if (this.form.valid) {
 
-      this.form.value.name = this.form.value.name.toUpperCase();
-      this.form.value.type = this.form.value.type.toUpperCase();
+   //   this.form.value.name = this.form.value.name.toUpperCase();
+  //    this.form.value.type = this.form.value.type.toUpperCase();
       this.service.save(this.form.value as Beer).subscribe({
         next: () => this.onSuccess(),
         error: () => this.onError(),
