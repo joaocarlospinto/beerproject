@@ -17,6 +17,7 @@ import { Beer } from '../../model/beer';
 
 import { BeersService } from '../../services/beers.service';
 
+
 @Component({
   selector: 'app-beers',
   templateUrl: './beer.component.html',

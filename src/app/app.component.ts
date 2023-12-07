@@ -8,12 +8,13 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
   standalone: true,
   imports: [MatToolbarModule, RouterLink, RouterOutlet, MatSlideToggleModule],
   template: `
-    <mat-toolbar color="primary" >
+
+    <mat-toolbar color="primary">
 
     <img  src="./assets/logo-bg.png" [routerLink]="['/']" style="width: 20%" />
-
     </mat-toolbar>
     <router-outlet></router-outlet>
+
   `,
 })
 export class AppComponent {

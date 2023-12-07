@@ -1,10 +1,12 @@
-<mat-card >
+
+<mat-card>
   <mat-toolbar color="primary">
     <h1>Beers List</h1>
   </mat-toolbar>
 
   <div class="mat-elevation-z8" *ngIf="beers$; else loading">
-    <app-beers-list  color="primary"
+    <app-beers-list
+      color="primary"
       [beers]="beers$"
       (add)="onAdd()"
       (edit)="onEdit($event)"

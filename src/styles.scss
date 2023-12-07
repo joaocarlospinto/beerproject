@@ -1,3 +1,13 @@
+@import '@angular/material/prebuilt-themes/purple-green.css';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+
+/*
+
 @use '@angular/material' as mat;
 @include mat.core();
 
@@ -16,8 +26,4 @@ $theme-dark: mat.define-dark-theme((
  ));
 
 @include mat.all-component-themes($theme-dark);
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-
+*/

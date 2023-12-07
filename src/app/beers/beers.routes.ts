@@ -7,7 +7,7 @@ import { BeerResolver } from './resolver/beer.resolver';
 
 export const BEERS_ROUTES: Routes = [
   { path: '', component: BeersComponent },
-  { path: 'new', component: BeerFormComponent, resolve: { course: BeerResolver } },
+  { path: 'new', component: BeerFormComponent, resolve: { beer: BeerResolver } },
   {
     path: 'edit/:id',
     component: BeerFormComponent,
@@ -18,4 +18,5 @@ export const BEERS_ROUTES: Routes = [
     component: BeerViewComponent,
     resolve: { beer: BeerResolver }
   }
+
 ];

@@ -11,11 +11,12 @@ import { ActivatedRoute } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 
 import { Beer } from '../../model/beer';
-import { Location, NgFor, NgIf } from '@angular/common';
+import { CommonModule, Location, NgFor, NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { StartComponent } from '../../shared/components/star-rating/star-rating.component';
 
 
 @Component({
@@ -33,7 +34,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule,
     MatToolbarModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    StartComponent,
+    CommonModule
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })
