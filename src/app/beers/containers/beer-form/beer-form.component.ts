@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
   ValidatorFn,
-  AbstractControl
+  AbstractControl,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -27,10 +27,16 @@ import { BeersService } from 'src/app/beers/services/beers.service';
 import { ErrorDialogComponent } from 'src/app/beers/shared/components/error-dialog/error-dialog.component';
 import { FormUtilsService } from 'src/app/beers/shared/services/form-utils.service';
 import { countries } from '../../model/country-data-store';
+import { FileUploadService } from '../../services/file-upload.service';
+import { HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 function ratingRange(min: number, max: number): ValidatorFn {
   return (c: AbstractControl): { [key: string]: boolean } | null => {
-    if (c.value !== null && (isNaN(c.value) || c.value < min || c.value > max)) {
+    if (
+      c.value !== null &&
+      (isNaN(c.value) || c.value < min || c.value > max)
+    ) {
       return { range: true };
     }
     return null;
@@ -61,6 +67,13 @@ function ratingRange(min: number, max: number): ValidatorFn {
 export class BeerFormComponent implements OnInit {
   form!: FormGroup;
   public countries: any = countries;
+  currentFile?: File;
+  fileName? = '';
+  message? = '';
+  imageInfos?: Observable<any>;
+  preview?: string;
+  imageToShow: any;
+  isImageLoading: boolean = true;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -69,29 +82,14 @@ export class BeerFormComponent implements OnInit {
     private dialog: MatDialog,
     private location: Location,
     private route: ActivatedRoute,
-    public formUtils: FormUtilsService
+    public formUtils: FormUtilsService,
+    private uploadService: FileUploadService
   ) {}
 
   ngOnInit(): void {
     const beer: Beer = this.route.snapshot.data['beer'];
-    if (beer) {
-      this.form = this.formBuilder.group({
-        id: [beer.id],
-        name: [
-          beer.name,
-          [
-            Validators.required,
-            Validators.minLength(1),
-            Validators.maxLength(100),
-          ],
-        ],
-        type: [beer.type, [Validators.required]],
-        origin: [beer.origin, [Validators.required]],
-        price: [beer.price, [Validators.required, Validators.min(0.01)]],
-        rating: [beer.rating, [Validators.required, ratingRange(0.01, 5.00)]],
-      });
-    }
-    if (!beer) {
+
+    if (beer.name == '') {
       this.form = this.formBuilder.group({
         id: [null],
         name: [
@@ -105,26 +103,47 @@ export class BeerFormComponent implements OnInit {
         type: [null, [Validators.required]],
         origin: [null, [Validators.required]],
         price: [null, [Validators.required, Validators.min(0.01)]],
-        rating: [null, [Validators.required, ratingRange(0.01, 5.00)]],
+        rating: [null, [Validators.required, ratingRange(0.01, 5.0)]],
+        image: [null],
       });
+    } else {
+      console.log('achou a beer' + beer);
+      this.form = this.formBuilder.group({
+        id: [beer.id],
+        name: [
+          beer.name,
+          [
+            Validators.required,
+            Validators.minLength(1),
+            Validators.maxLength(100),
+          ],
+        ],
+        type: [beer.type, [Validators.required]],
+        origin: [beer.origin, [Validators.required]],
+        price: [beer.price, [Validators.required, Validators.min(0.01)]],
+        rating: [beer.rating, [Validators.required, ratingRange(0.01, 5.0)]],
+        image: [beer.image],
+      });
+
+      this.fileName = beer.image;
+      this.obtainImage();
     }
 
     const nameContr = this.form.get('name');
     nameContr?.valueChanges.subscribe(() => {
-      nameContr.patchValue(nameContr.value.toUpperCase(), {emitEvent: false});
+      nameContr.patchValue(nameContr.value.toUpperCase(), { emitEvent: false });
     });
     const typeContr = this.form.get('type');
     typeContr?.valueChanges.subscribe(() => {
-      typeContr.patchValue(typeContr.value.toUpperCase(), {emitEvent: false});
+      typeContr.patchValue(typeContr.value.toUpperCase(), { emitEvent: false });
     });
   }
 
-
-  getErrorMessage(fieldName: string): string{
-    if ((fieldName == 'price')) {
+  getErrorMessage(fieldName: string): string {
+    if (fieldName == 'price') {
       return 'Minimum value is 0.01';
     } else {
-      if ((fieldName == 'rating')) {
+      if (fieldName == 'rating') {
         return 'Rating must be between 0.01 and 5.00';
       } else {
         return this.formUtils.getFieldErrorMessage(this.form, fieldName);
@@ -134,9 +153,11 @@ export class BeerFormComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-
-   //   this.form.value.name = this.form.value.name.toUpperCase();
-  //    this.form.value.type = this.form.value.type.toUpperCase();
+      if (this.fileName != null) {
+        this.form.patchValue({
+          image: this.fileName,
+        });
+      }
       this.service.save(this.form.value as Beer).subscribe({
         next: () => this.onSuccess(),
         error: () => this.onError(),
@@ -152,6 +173,7 @@ export class BeerFormComponent implements OnInit {
 
   private onSuccess() {
     this.snackBar.open('Beer saved successfully!', '', { duration: 5000 });
+    this.upload();
     this.onCancel();
   }
 
@@ -159,5 +181,73 @@ export class BeerFormComponent implements OnInit {
     this.dialog.open(ErrorDialogComponent, {
       data: 'Error saving this beer.',
     });
+  }
+
+  selectFile(event: any): void {
+    this.currentFile = event.target.files.item(0);
+    this.fileName = this.currentFile?.name;
+    if (this.currentFile) {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        this.preview = e.target.result;
+      };
+      reader.readAsDataURL(this.currentFile);
+    }
+  }
+
+  upload(): void {
+    if (this.currentFile) {
+      this.uploadService.upload(this.currentFile).subscribe({
+        next: (event: any) => {
+          if (event instanceof HttpResponse) {
+            this.message = event.body.message;
+            this.imageInfos = this.uploadService.getFile(this.fileName);
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+
+          if (err.error && err.error.message) {
+            this.message = err.error.message;
+          } else {
+            this.message = 'Could not upload the file!';
+          }
+        },
+        complete: () => {
+          this.currentFile = undefined;
+        },
+      });
+    }
+  }
+
+  obtainImage(): void {
+
+    this.isImageLoading = true;
+    this.uploadService.getFile(this.fileName).subscribe(
+      (data) => {
+        this.createImageFromBlob(data);
+        this.isImageLoading = false;
+      },
+      (error) => {
+        this.isImageLoading = false;
+        console.log(error);
+      }
+    );
+  }
+
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.imageToShow = reader.result;
+      },
+      false
+    );
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
   }
 }

@@ -19,6 +19,6 @@ export class BeerResolver {
     if (route.params && route.params['id']) {
       return this.service.loadById(route.params['id']);
     }
-    return of({ id: 0, name: '', type: '', origin: '', price: 0, rating: 0 });
+    return of({ id: 0, name: '', type: '', origin: '', price: 0, rating: 0, image: '' });
   }
 }

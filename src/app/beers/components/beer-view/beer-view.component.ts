@@ -17,6 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { StartComponent } from '../../shared/components/star-rating/star-rating.component';
+import { FileUploadService } from '../../services/file-upload.service';
 
 
 @Component({
@@ -42,18 +43,62 @@ import { StartComponent } from '../../shared/components/star-rating/star-rating.
 })
 export class BeerViewComponent implements OnInit {
   beer!: Beer;
+  fileName? = '';
+  imageShow: any;
+  isImageLoading: boolean = true;
+
 
   constructor(
     private route: ActivatedRoute,
     private changeDetectorRef: ChangeDetectorRef,
-    private location: Location) { }
+    private location: Location,
+    private uploadService: FileUploadService) { }
 
   ngOnInit() {
     this.beer = this.route.snapshot.data['beer'];
+    this.fileName = this.beer.image;
+    this.obtainImage();
   }
 
   onCancel() {
     this.location.back();
   }
+
+
+  obtainImage(): void {
+   console.log("obtain image");
+   console.log(this.fileName);
+    this.isImageLoading = true;
+    this.uploadService.getFile(this.fileName).subscribe(
+      (data) => {
+        this.createImageFromBlob(data);
+        console.log("ok");
+        this.isImageLoading = false;
+        console.log(this.isImageLoading);
+      },
+      (error) => {
+        console.log("erro");
+        this.isImageLoading = false;
+        console.log(error);
+      }
+    );
+  }
+
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.imageShow = reader.result;
+        console.log(this.imageShow);
+      },
+      false
+    );
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+
 
 }

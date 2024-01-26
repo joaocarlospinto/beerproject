@@ -5,4 +5,5 @@ export interface Beer {
   origin: string;
   price: number;
   rating: number;
+  image: string;
 }

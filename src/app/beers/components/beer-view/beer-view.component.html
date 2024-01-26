@@ -10,10 +10,16 @@
       <mat-divider></mat-divider>
       <mat-list-item><b>ORIGIN :</b> {{ beer.origin }}</mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item><b>PRICE :</b> {{ beer.price | currency: 'EUR':'symbol':'1.2-2' }}</mat-list-item>
+      <mat-list-item
+        ><b>PRICE :</b>
+        {{ beer.price | currency : "EUR" : "symbol" : "1.2-2" }}</mat-list-item
+      >
       <mat-divider></mat-divider>
-      <mat-list-item><b>RATING :</b> {{ beer.rating}} </mat-list-item>
+      <mat-list-item><b>RATING :</b> {{ beer.rating }} </mat-list-item>
       <mat-divider></mat-divider>
+      <mat-list-item>
+        <img [src]="imageShow" alt="Beer Image" >
+      </mat-list-item>
     </mat-list>
 
     <mat-card-actions class="actions-center">
