@@ -47,7 +47,6 @@ export class BeerViewComponent implements OnInit {
   imageShow: any;
   isImageLoading: boolean = true;
 
-
   constructor(
     private route: ActivatedRoute,
     private changeDetectorRef: ChangeDetectorRef,
@@ -63,7 +62,6 @@ export class BeerViewComponent implements OnInit {
   onCancel() {
     this.location.back();
   }
-
 
   obtainImage(): void {
    console.log("obtain image");
@@ -99,6 +97,5 @@ export class BeerViewComponent implements OnInit {
       reader.readAsDataURL(image);
     }
   }
-
 
 }

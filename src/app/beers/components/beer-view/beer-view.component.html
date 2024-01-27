@@ -1,7 +1,9 @@
 <mat-card appearance="outlined">
+
   <mat-toolbar color="primary">
     <h1>Beers Detail</h1>
   </mat-toolbar>
+
   <mat-table class="mat-elevation-z8">
     <mat-list>
       <mat-list-item><b>NAME : </b>{{ beer.name }}</mat-list-item>
@@ -17,21 +19,23 @@
       <mat-divider></mat-divider>
       <mat-list-item><b>RATING :</b> {{ beer.rating }} </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item>
-        <img [src]="imageShow" alt="Beer Image" >
+      <mat-list-item *ngIf="!isImageLoading">
+        <img [src]="imageShow" alt="Beer Image">
       </mat-list-item>
+      <mat-divider></mat-divider>
     </mat-list>
+
 
     <mat-card-actions class="actions-center">
       <button
         mat-raised-button
         (click)="onCancel()"
         class="btn-space"
-        type="button"
-      >
+        type="button" >
         <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_left"></mat-icon>
         Back
       </button>
     </mat-card-actions>
   </mat-table>
 </mat-card>
+
