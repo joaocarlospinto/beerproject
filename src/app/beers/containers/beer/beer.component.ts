@@ -80,6 +80,10 @@ export class BeersComponent implements OnInit {
     this.router.navigate(['new'], { relativeTo: this.route });
   }
 
+  onAbout() {
+    this.router.navigate(['about'], { relativeTo: this.route });
+  }
+
   onEdit(beer: Beer) {
     this.router.navigate(['edit', beer.id], { relativeTo: this.route });
   }

@@ -1,48 +1,84 @@
-<div >
-  <div>
-    <div style="justify-content: center; text-align: center">
-      <img src="./assets/images/logo-bg.png" style="width: 40%" />
-    </div>
-    <div class='card-title'>
-      <h3>{{pageTitle}}</h3>
-    </div>
-    <p>This site is a personal project created while studing Angular and Java.
-    </p>
-    <p>I started learning JAVA 17, then Spring Boot and created some Rest API, but I could only see the results using POSTMAN.</p>
-    <p>I thought, what about learning some front-end framework? So I could see better the result. Then I started learning ANGULAR.</p>
+<mat-card appearance="outlined">
+  <mat-toolbar color="primary">
+    <h1>{{ pageTitle }}</h1>
+  </mat-toolbar>
+  <mat-card-content>
+    <mat-table class="mat-elevation-z8">
+      <mat-icon  fontIcon="castle"></mat-icon>
+      <p>
+        This site is a personal project created while studying Angular and Java.
+      </p>
+      <p>
+        I started learning JAVA 17, then Spring Boot, and created some Rest API,
+        but I could only see the results using POSTMAN
+      </p>
+      <p>
+        I thought, what about learning some front-end framework? So I could see
+        the result better. Then I started learning ANGULAR.
+      </p>
 
-    <p>The first part of the project was: Create a REST API with a CRUD with one table called Beers</p>
-    <p>The Fron-End is this about page and a List of Beers where you can access the detail.</p>
-    <P>After I finished Angular Forms, I created the "Add Beer" and added the delete and Update functions.</P>
-    <p><b>Front End:</b>  </p>
-    <ul>
-      <li>Angular - HTML, CSS, TypeScript and JavaScript</li>
-      <li>BootStrap</li>
-      <li>FontAwesome</li>
-    </ul>
-    <h5><i class="fa fa-github" aria-hidden="true"></i><a href="https://github.com/joaocarlospinto/beerprojectfrontend" style="color:rgb(246, 216, 23)">You can find the Front End code in this repository </a></h5>
+      <p>
+        The first part of the project was to create a REST API with CRUD
+        operations on a table called 'Beers'.
+      </p>
+      <p>
+        The Front-End includes this about page and a list of Beers where you can
+        access the details of each beer, update, and delete it.
+      </p>
+      <p>
+        I wanted to display the Beer's Image, so I created a new API to store
+        and retrieve the beer's image by name.
+      </p>
 
-    <p></p>
-    <p><b>Back End :</b> API Rest</p>
-    <ul>
-      <li>Java</li>
-      <li>Spring Boot</li>
-      <li>JPA</li>
-      <li>PostGreSQL</li>
-      <li>Hateoas</li>
-    </ul>
+      <p><b>Front End:</b></p>
+      <ul>
+        <li>Angular - HTML, CSS, TypeScript and JavaScript</li>
+        <li>Angular Materials</li>
+      </ul>
+      The Front-End is deployed on Github Pages.
+      <h5>
+        <a href="https://github.com/joaocarlospinto/beerproject"
+          >You can find the Front End code in this repository
+        </a>
+      </h5>
 
-    <p></p>
-    <h5><i class="fa fa-github" aria-hidden="true"></i><a href="https://github.com/joaocarlospinto/beerprojectapi">You can find the Back End code in this repository</a></h5>
-    <p></p>
-    <div class='card-text'><h5>Developed by: Joao Carlos Pinto</h5></div>
-    <div class='card-text'>
-      <h5><i class="fa fa-github" aria-hidden="true"></i><a href='https://github.com/joaocarlospinto' >github</a></h5>
-    </div>
-    <div class='card-text'>
-      <a href='https://www.linkedin.com/in/joao-pinto-49a9381a/' ><h5><i class="fa fa-linkedin-square" aria-hidden="true"></i></h5></a>
-    </div>
+      <p></p>
+      <p>
+        <b>Back End :</b> 2 API Rest - The Beer database CRUD and the Image
+        store/retrieve
+      </p>
+      <ul>
+        <li>Java</li>
+        <li>Spring Boot</li>
+        <li>JPA</li>
+        <li>PostGreSQL</li>
+        <li>Hateoas</li>
+      </ul>
+      The Back End is deployed on Render (Docker).
 
-  </div>
-</div>
+      <p></p>
+      <h5>
+        <a href="https://github.com/joaocarlospinto/beerprojectapi"
+          >You can find the Back End Beer API code in this repository</a
+        >
+      </h5>
+      <p></p>
+      <p></p>
+      <h5>
+        <a href="https://github.com/joaocarlospinto/photoshare"
+          >You can find the Back End Image API code in this repository</a
+        >
+      </h5>
+      <p></p>
+      <h3>Developed by: Joao Carlos Pinto</h3>
 
+      <h5>
+        <a href="https://github.com/joaocarlospinto">
+
+          github</a>
+      </h5>
+
+      <a href="https://www.linkedin.com/in/joao-pinto-49a9381a/"><h5></h5></a>
+    </mat-table>
+  </mat-card-content>
+</mat-card>
