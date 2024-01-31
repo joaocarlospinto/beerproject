@@ -18,6 +18,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { StartComponent } from '../../shared/components/star-rating/star-rating.component';
 import { FileUploadService } from '../../services/file-upload.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -51,7 +52,8 @@ export class BeerViewComponent implements OnInit {
     private route: ActivatedRoute,
     private changeDetectorRef: ChangeDetectorRef,
     private location: Location,
-    private uploadService: FileUploadService) { }
+    private uploadService: FileUploadService,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.beer = this.route.snapshot.data['beer'];
@@ -64,20 +66,15 @@ export class BeerViewComponent implements OnInit {
   }
 
   obtainImage(): void {
-   console.log("obtain image");
-   console.log(this.fileName);
+
     this.isImageLoading = true;
     this.uploadService.getFile(this.fileName).subscribe(
       (data) => {
         this.createImageFromBlob(data);
-        console.log("ok");
         this.isImageLoading = false;
-        console.log(this.isImageLoading);
       },
       (error) => {
-        console.log("erro");
         this.isImageLoading = false;
-        console.log(error);
       }
     );
   }
@@ -88,14 +85,16 @@ export class BeerViewComponent implements OnInit {
       'load',
       () => {
         this.imageShow = reader.result;
-        console.log(this.imageShow);
+        this.imageShow = this.sanitizer.bypassSecurityTrustResourceUrl(this.imageShow);
+        this.changeDetectorRef.markForCheck();
       },
       false
     );
-
     if (image) {
+
       reader.readAsDataURL(image);
     }
+
   }
 
 }

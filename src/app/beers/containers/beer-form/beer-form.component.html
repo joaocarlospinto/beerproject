@@ -55,7 +55,7 @@
 
   <mat-card  *ngIf="!isImageLoading">
     <mat-card-content>
-      <img [src]="imageToShow" alt="Beer Image" >
+      <img [src]="imageToShow" alt="Beer Image" style="width: 50; height: auto">
     </mat-card-content>
   </mat-card>
 
@@ -81,19 +81,20 @@
   </div>
 
   <div class="preview">
-    <img [src]="preview" class="preview" />
+    <img [src]="preview" class="preview" style="width: 30; height: auto"/>
   </div>
 
   <mat-card-actions class="actions-center">
     <button
       mat-raised-button
       color="primary"
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || !isFormChanged"
       (click)="onSubmit()"
       type="submit"
     >
       Save
     </button>
+
     <button
       mat-raised-button
       (click)="onCancel()"

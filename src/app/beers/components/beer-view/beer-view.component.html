@@ -19,11 +19,12 @@
       <mat-divider></mat-divider>
       <mat-list-item><b>RATING :</b> {{ beer.rating }} </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item *ngIf="!isImageLoading">
-        <img [src]="imageShow" alt="Beer Image">
-      </mat-list-item>
-      <mat-divider></mat-divider>
     </mat-list>
+    <mat-card-footer mat-card-avatar  *ngIf="!isImageLoading">
+      <mat-card-content>
+        <img [src]="imageShow" alt="Beer Image" style="width: 50; height: auto;" >
+      </mat-card-content>
+    </mat-card-footer >
 
 
     <mat-card-actions class="actions-center">

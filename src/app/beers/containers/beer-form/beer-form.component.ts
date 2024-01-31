@@ -30,6 +30,7 @@ import { countries } from '../../model/country-data-store';
 import { FileUploadService } from '../../services/file-upload.service';
 import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Expansion } from '@angular/compiler';
 
 function ratingRange(min: number, max: number): ValidatorFn {
   return (c: AbstractControl): { [key: string]: boolean } | null => {
@@ -74,6 +75,9 @@ export class BeerFormComponent implements OnInit {
   preview?: string;
   imageToShow: any;
   isImageLoading: boolean = true;
+  isFormChanged: boolean = false;
+  origFormValue: string = '';
+  imageNotExists: boolean = false;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -107,7 +111,6 @@ export class BeerFormComponent implements OnInit {
         image: [null],
       });
     } else {
-      console.log('achou a beer' + beer);
       this.form = this.formBuilder.group({
         id: [beer.id],
         name: [
@@ -125,6 +128,7 @@ export class BeerFormComponent implements OnInit {
         image: [beer.image],
       });
 
+      this.origFormValue = JSON.stringify(this.form.value);
       this.fileName = beer.image;
       this.obtainImage();
     }
@@ -136,6 +140,14 @@ export class BeerFormComponent implements OnInit {
     const typeContr = this.form.get('type');
     typeContr?.valueChanges.subscribe(() => {
       typeContr.patchValue(typeContr.value.toUpperCase(), { emitEvent: false });
+    });
+
+    this.form.valueChanges.subscribe(() => {
+      if (JSON.stringify(this.form.value) === this.origFormValue) {
+        this.isFormChanged = false;
+      } else {
+        this.isFormChanged = true;
+      }
     });
   }
 
@@ -153,11 +165,6 @@ export class BeerFormComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      if (this.fileName != null) {
-        this.form.patchValue({
-          image: this.fileName,
-        });
-      }
       this.service.save(this.form.value as Beer).subscribe({
         next: () => this.onSuccess(),
         error: () => this.onError(),
@@ -193,11 +200,16 @@ export class BeerFormComponent implements OnInit {
         this.preview = e.target.result;
       };
       reader.readAsDataURL(this.currentFile);
+
+      this.form.patchValue({
+        image: this.fileName,
+      });
+      this.checkImage();
     }
   }
 
   upload(): void {
-    if (this.currentFile) {
+    if (this.currentFile && this.imageNotExists) {
       this.uploadService.upload(this.currentFile).subscribe({
         next: (event: any) => {
           if (event instanceof HttpResponse) {
@@ -222,7 +234,6 @@ export class BeerFormComponent implements OnInit {
   }
 
   obtainImage(): void {
-
     this.isImageLoading = true;
     this.uploadService.getFile(this.fileName).subscribe(
       (data) => {
@@ -249,5 +260,19 @@ export class BeerFormComponent implements OnInit {
     if (image) {
       reader.readAsDataURL(image);
     }
+  }
+
+  checkImage(): void {
+    this.imageNotExists = false;
+    this.uploadService.getFile(this.fileName).subscribe(
+      (data) => {
+
+        this.imageNotExists = true;
+      },
+      (error) => {
+        this.imageNotExists = false;
+
+      }
+    );
   }
 }
