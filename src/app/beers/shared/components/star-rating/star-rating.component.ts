@@ -9,10 +9,12 @@ import { Component, Input, OnChanges } from "@angular/core";
 })
 export class StartComponent implements OnChanges{
     @Input() rating: number = 0;
-    cropWidth: number = 75;
+    cropWidth: number = 100;
 
     ngOnChanges(): void {
-        this.cropWidth = this.rating * 75/5;
+      console.log("this.rating: " + this.rating);
+        this.cropWidth = this.rating * 80/5;
+        console.log(this.cropWidth);
     }
 
 }
