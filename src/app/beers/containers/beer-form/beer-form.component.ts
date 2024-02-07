@@ -130,7 +130,9 @@ export class BeerFormComponent implements OnInit {
 
       this.origFormValue = JSON.stringify(this.form.value);
       this.fileName = beer.image;
-      this.obtainImage();
+      if (this.fileName != null) {
+         this.obtainImage();
+      }
     }
 
     const nameContr = this.form.get('name');

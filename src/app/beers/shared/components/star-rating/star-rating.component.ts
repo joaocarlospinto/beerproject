@@ -12,9 +12,9 @@ export class StartComponent implements OnChanges{
     cropWidth: number = 100;
 
     ngOnChanges(): void {
-      console.log("this.rating: " + this.rating);
+
         this.cropWidth = this.rating * 80/5;
-        console.log(this.cropWidth);
+
     }
 
 }

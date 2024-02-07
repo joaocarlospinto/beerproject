@@ -58,7 +58,9 @@ export class BeerViewComponent implements OnInit {
   ngOnInit() {
     this.beer = this.route.snapshot.data['beer'];
     this.fileName = this.beer.image;
-    this.obtainImage();
+    if (this.fileName != null) {
+        this.obtainImage();
+    }
   }
 
   onCancel() {
@@ -74,7 +76,7 @@ export class BeerViewComponent implements OnInit {
         this.isImageLoading = false;
       },
       (error) => {
-        this.isImageLoading = false;
+        this.isImageLoading = true;
       }
     );
   }
