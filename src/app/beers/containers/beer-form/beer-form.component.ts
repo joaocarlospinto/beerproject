@@ -221,7 +221,6 @@ export class BeerFormComponent implements OnInit {
         },
         error: (err: any) => {
           console.log(err);
-
           if (err.error && err.error.message) {
             this.message = err.error.message;
           } else {
@@ -237,16 +236,15 @@ export class BeerFormComponent implements OnInit {
 
   obtainImage(): void {
     this.isImageLoading = true;
-    this.uploadService.getFile(this.fileName).subscribe(
-      (data) => {
+    this.uploadService.getFile(this.fileName).subscribe({
+      next:(data) => {
         this.createImageFromBlob(data);
         this.isImageLoading = false;
       },
-      (error) => {
+      error:() => {
         this.isImageLoading = false;
-        console.log(error);
       }
-    );
+    });
   }
 
   createImageFromBlob(image: Blob) {
@@ -264,17 +262,15 @@ export class BeerFormComponent implements OnInit {
     }
   }
 
-  checkImage(): void {
-    this.imageNotExists = false;
-    this.uploadService.getFile(this.fileName).subscribe(
-      (data) => {
-
-        this.imageNotExists = true;
-      },
-      (error) => {
-        this.imageNotExists = false;
-
-      }
-    );
+   checkImage(): void {
+      this.imageNotExists = false;
+      this.uploadService.getFile(this.fileName).subscribe({
+        next: () => {
+          this.imageNotExists = false;
+        },
+        error: (err: any) => {
+          this.imageNotExists = true;
+        }
+   });
   }
 }

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class FileUploadService {
   private baseUrl= 'https://photoshare-gyao.onrender.com';
-  // private baseUrl = 'http://localhost:8000';
+ // private baseUrl = 'http://localhost:8080';
   fileName = '';
 
   constructor(private http: HttpClient) {}
